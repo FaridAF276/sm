@@ -20,9 +20,9 @@ include 'navbar.php';
 
 
 
-<?php
- echo $navbar;
-?>
+    <?php
+    echo $navbar;
+    // C'est une navbar qui vient du fichier navbar.php dans le dossier includes?>
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
