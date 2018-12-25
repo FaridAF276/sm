@@ -53,24 +53,24 @@ include 'navbar.php';
                 
                 <td class="edit_td">
                 <span id="nom_<?php echo $id;?>" class="text"> <?php echo $nom;?> </span>
-                <input type="text" value="<?php echo $nom; ?>" class="editbox" id="nom_input_<?php echo $id; ?>" />
+                <input type="text" value="<?php echo $nom; ?>" class="editbox form-control" id="nom_input_<?php echo $id; ?>" />
                 </td>
 
 
                 <td class="edit_td">
                 <span id="mail_<?php echo $id; ?>" class="text"><?php echo $mail; ?></span>
-                <input type="text" value="<?php echo $mail; ?>" class="editbox" id="mail_input_<?php echo $id; ?>"/>
+                <input type="text" value="<?php echo $mail; ?>" class="editbox form-control" id="mail_input_<?php echo $id; ?>"/>
                 </td>
 
                 <td class="edit_td">
                 <span id="tel_<?php echo $id; ?>" class="text"><?php echo $tel; ?></span> 
-                <input type="text" value="<?php echo $tel; ?>" class="editbox" id="tel_input_<?php echo $id; ?>"/>
+                <input type="text" value="<?php echo $tel; ?>" class="editbox form-control" id="tel_input_<?php echo $id; ?>"/>
                 </td>
 
 
                 <td class="edit_td">
                 <span id="cp_<?php echo $id; ?>" class="text"><?php echo $cp; ?></span>
-                <input type="text" value="<?php echo $cp; ?>" class="editbox" id="cp_input_<?php echo $id; ?>" />
+                <input type="text" value="<?php echo $cp; ?>" class="editbox form-control" id="cp_input_<?php echo $id; ?>" />
                 </td>
                 <!-- Delete button -->
                 <td>
@@ -148,6 +148,14 @@ include 'navbar.php';
             });
 
             });
+    </script>
+    <script>
+        $(document).ready(function(){
+
+            $(".edit_tr").click(function({
+
+            }))
+        })
     </script>
 </body>
 </html>
