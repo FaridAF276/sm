@@ -41,7 +41,7 @@ include 'navbar.php';
             <a class="dropdown-item" href="#"" id="Ddown_datedesc"">Date (descendant) </a>
             <a class="dropdown-item" href="#" id="Ddownnumclient">Numéro de Client </a>
             </div>
-          </span>
+        </span>
     <?php
         //Si la variable $_POST['truc'] existe, alors $truc = $_POST['truc']  sinon elle vaut NULL 
         $numfact = isset($_POST["numfact"]) ? $_POST["numfact"] : NULL;

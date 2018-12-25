@@ -23,7 +23,26 @@ include 'navbar.php';
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <h1>Bienvenue sur Sport Manager - Gestion de Client</h1>
+    <h1>Bienvenue sur Sport Manager - Gestion de Client <!--<?php echo date("ymd") ?>--> </h1>
+
+    <!-- On met en place un form qui nous permet d'ajouter un client -->
+    <form action="inc.client.php" method = "POST", text-align : "center">
+        <input class= "form-control-sm" type="text" name="nomclient" placeholder = "Nom du client">
+        <input class= "form-control-sm" type="text" name="mailclient" placeholder = "Adresse mail du client">
+        <input class= "form-control-sm" type="number" name="numclient" placeholder = "Numéro TVA du Client">
+        <input class= "form-control-sm" type="number" name="cp" placeholder = "Code Postale">
+        <input  type= "submit" value = "Ajouter un nouveau client" class = "btn btn-primary">
+    <?php if (isset($_POST["nomclient"]) && isset($_POST["mailclient"]) && isset($_POST["numclient"]) && isset($_POST["cp"])){
+        $nomclient = $_POST["nomclient"];
+        $mailclient = $_POST["mailclient"];
+        $numclient = $_POST["numclient"];
+        $CP = $_POST["cp"];
+        $valclient = array ($nomclient, $mailclient, $numclient, $CP);
+        $sql ="INSERT INTO client (nom_Client, mail_client, numtel_client, CP) VALUES (?,?,?,?)";
+        insert ($sql, $valclient, $base);
+    }
+    ?>
+    </form>
     <!-- On met en place la table ainsi que les input on en cachera un et on montrera l'autre 
     en fonction des événemets -->
     <table class="table table-striped table-hover">
