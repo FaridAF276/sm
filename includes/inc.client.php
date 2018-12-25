@@ -108,6 +108,7 @@ include 'navbar.php';
         <script type="text/javascript">
             $(document).ready(function()
             {
+                $(".editbox").hide(); //Dès qu'on ouvre on cache les editbox
                 $(".edit_tr").click(function()
                 {
                     var ID=$(this).attr('id');

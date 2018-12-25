@@ -42,17 +42,18 @@ include 'navbar.php';
             <a class="dropdown-item" href="#" id="Ddownnumclient">Numéro de Client </a>
             </div>
         </span>
-    <?php
-        //Si la variable $_POST['truc'] existe, alors $truc = $_POST['truc']  sinon elle vaut NULL 
-        $numfact = isset($_POST["numfact"]) ? $_POST["numfact"] : NULL;
-        $datefact = isset($_POST["datefact"]) ? $_POST["datefact"] : NULL;
-        $numclient = isset($_POST["numclient"]) ? $_POST["numclient"] : NULL;
-        $valeurfact =  array ($numfact, $datefact, $numclient);
-        
-        $sql ="INSERT INTO facture (num_fact, date_fact, idclient) VALUES (?,?,?)";
-        insert ($sql, $valeurfact, $base);
-    ?>
+        <?php
+            //Si la variable $_POST['truc'] existe, alors $truc = $_POST['truc']  sinon elle vaut NULL 
+            $numfact = isset($_POST["numfact"]) ? $_POST["numfact"] : NULL;
+            $datefact = isset($_POST["datefact"]) ? $_POST["datefact"] : NULL;
+            $numclient = isset($_POST["numclient"]) ? $_POST["numclient"] : NULL;
+            $valeurfact =  array ($numfact, $datefact, $numclient);
+            
+            $sql ="INSERT INTO facture (num_fact, date_fact, idclient) VALUES (?,?,?)";
+            insert ($sql, $valeurfact, $base);
+        ?>
     </form>
+    
     <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         
