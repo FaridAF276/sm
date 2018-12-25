@@ -24,72 +24,130 @@ include 'navbar.php';
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <h1>Bienvenue sur Sport Manager - Gestion de Client</h1>
-    <form action="inc.client.php" method = "POST", text-align : "center">
-        <input class= "form-control-sm" type="char[50]" name="nomclient" placeholder = "Nom du client">
-        <input class= "form-control-sm" type="char[50]" name="mailclient" placeholder = "Adresse e-mail du client">
-        <input class= "form-control-sm" type="number" name="numtelclient" placeholder = "Numéro de téléphone du client">
-        <input class= "form-control-sm" type="number" name="cpclient" placeholder = "Code postal du client">
-        <input type= "submit" value = "Créer un nouveau client" class= "btn btn-primary">
-
-
-        <span class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Trier par :
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Nom de client</a>
-            <a class="dropdown-item" href="#">Adresse mail</a>
-            <a class="dropdown-item" href="#">Code Postal</a>
-          </div>
-        </span>
-    <?php
-        if (isset ($_POST["nomclient"]) && isset ($_POST["mailclient"]) && isset ($_POST["numtelclient"]) && isset ($_POST["cpclient"]))
-        {
-            $nomclient = $_POST["nomclient"];
-            $mailclient = $_POST["mailclient"];
-            $numtelclient = $_POST["numtelclient"];
-            $cpclient = $_POST["cpclient"];
-            $valeurclient =  array ($nomclient, $mailclient, $numtelclient, $cpclient);
-            $sql ="INSERT INTO client (nom_Client, mail_client, numtel_client, CP) VALUES (?,?,?,?)";
-            insert ($sql, $valeurclient, $base);
-        }
-        
-    ?>
-    </form>
-
-
-    <table class="table">
+    <!-- On met en place la table ainsi que les input on en cachera un et on montrera l'autre 
+    en fonction des événemets -->
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
-            <th scope ='col'>ID Client</th>
-            <th scope ='col'>Nom du client</th>
-            <th scope ='col'>Adresse mail</th>
-            <th scope ='col'>Numéro de téléphone du client</th>
-            <th scope ='col'>Code postal</th>
-            <th scope = 'col'></th>
-            <th scope = 'col'></th>
-
+            <th>Nom</th>
+            <th>Adresse mail</th>
+            <th>N°Tel</th>
+            <th>Code Postale</th>
+            <th></th>
             </tr>
         </thead>
-        <tbody> 
-                <?php $client = gettable ('client', $base);?> 
-               <?php foreach ($client as $tab) {?>
-               
-                 <tr>
-                <th scope="row"><?php echo $tab["idClient"] ?> </th>
-                <td><?php echo $tab["nom_Client"] ?></td>
-                <td><?php echo $tab["mail_client"]?></td>
-                <td> <?php echo $tab["numtel_client"]?> </td>
-                <td> <?php echo $tab["CP"]?> </td>
-                <td><button type ="button"> Modifier </button></td>
-                <td><a href="http://localhost/sm/includes/dbtool.php/supp('facture','num_facture',$base)"> Supprimer</a></td>
-              </tr> 
-               <?php } ?>
+            <?php
+            include('db.php');
+            $sql=mysqli_query($db,"select * from client");
+            while($row=mysqli_fetch_assoc($sql))
+            {
+            $id=$row['idClient'];
+            $nom = $row['nom_Client'];
+            $mail=$row['mail_client'];
+            $tel=$row['numtel_client'];
+            $cp=$row['CP'];
+            ?>
+            
+            
+            <tr id="<?php echo $id; ?>" class="edit_tr">
+                
+                <td class="edit_td">
+                <span id="nom_<?php echo $id;?>" class="text"> <?php echo $nom;?> </span>
+                <input type="text" value="<?php echo $nom; ?>" class="editbox" id="nom_input_<?php echo $id; ?>" />
+                </td>
 
-        </tbody>
-               
 
+                <td class="edit_td">
+                <span id="mail_<?php echo $id; ?>" class="text"><?php echo $mail; ?></span>
+                <input type="text" value="<?php echo $mail; ?>" class="editbox" id="mail_input_<?php echo $id; ?>"/>
+                </td>
+
+                <td class="edit_td">
+                <span id="tel_<?php echo $id; ?>" class="text"><?php echo $tel; ?></span> 
+                <input type="text" value="<?php echo $tel; ?>" class="editbox" id="tel_input_<?php echo $id; ?>"/>
+                </td>
+
+
+                <td class="edit_td">
+                <span id="cp_<?php echo $id; ?>" class="text"><?php echo $cp; ?></span>
+                <input type="text" value="<?php echo $cp; ?>" class="editbox" id="cp_input_<?php echo $id; ?>" />
+                </td>
+                <!-- Delete button -->
+                <td>
+                    <button id = "dlt_<?php echo $id;?>" type = "Button" class="btn btn-danger">Supprimer</button>
+                </td>
+
+            </tr>
+            <?php
+            }
+            ?>
     </table>
 
+    <!-- On commence à éditer le script -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script> 
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function()
+            {
+            $(".edit_tr").click(function()
+            {
+            var ID=$(this).attr('id');
+            $("#nom_"+ID).hide();
+            $("#mail_"+ID).hide();
+            $("#tel_"+ID).hide();
+            $("#cp_"+ID).hide();
+            $("#nom_input_"+ID).show();
+            $("#mail_input_"+ID).show();
+            $("#tel_input_"+ID).show();
+            $("#cp_input_"+ID).show();
+            }).change(function()
+            {
+            var ID=$(this).attr('id');
+            var nom=$("#nom_input_"+ID).val();
+            var mail=$("#mail_input_"+ID).val();
+            var tel=$("#tel_input_"+ID).val();
+            var cp=$("#cp_input_"+ID).val();
+            var dataString = 'id='+ ID +'&nom='+nom+'&mail='+mail+'&tel='+tel+'&cp=' +cp;
+            $("#nom_"+ID).html('<img src="load.gif" />'); // Loading image
+
+            if(nom.length>0 && mail.length>0 && tel.length>0 && cp.length>0)
+            {
+
+            $.ajax({
+            type: "POST", //on fait une requête http de type POST
+            url: "./config/client.tabledit.php", //on passe des données vers le fichier table edit ajax
+            data: dataString, // la chaine de donnée qu'on passe
+            cache: false, //j'en sais rien 
+            success: function(html)
+            {
+            $("#nom_"+ID).html(nom); //on remplace par la valeur de nom etc par les nouvelles données
+            $("#mail_"+ID).html(mail);
+            $("#tel_"+ID).html(tel);
+            $("#cp_"+ID).html(cp);
+            }
+            });
+            }
+            else
+            {
+            alert('Enter something.');
+            }
+
+            });
+
+            // Edit input box click action || Si on clique sur le tableau pendant qu'on modifie ça fait rien
+            $(".editbox").mouseup(function() 
+            {
+            return false
+            });
+
+            // Outside click action|| Si on clique dehors on affiche le texte et on cache le form
+            $(document).mouseup(function()
+            {
+            $(".editbox").hide();
+            $(".text").show();
+            });
+
+            });
+    </script>
 </body>
 </html>
