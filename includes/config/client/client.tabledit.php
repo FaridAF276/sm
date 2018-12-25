@@ -1,5 +1,5 @@
 <?php
-include("D:\Programmes\wamp64\www\sm\includes\db.php");
+include_once("D:\Programmes\wamp64\www\sm\includes\db.php");
 if($_POST['id'])
 {
 echo $_POST['id'].$_POST['nom'].$_POST['mail'].$_POST['tel'].$_POST['cp'];

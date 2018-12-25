@@ -89,73 +89,83 @@ include 'navbar.php';
         <script type="text/javascript">
             $(document).ready(function()
             {
-            $(".edit_tr").click(function()
-            {
-            var ID=$(this).attr('id');
-            $("#nom_"+ID).hide();
-            $("#mail_"+ID).hide();
-            $("#tel_"+ID).hide();
-            $("#cp_"+ID).hide();
-            $("#nom_input_"+ID).show();
-            $("#mail_input_"+ID).show();
-            $("#tel_input_"+ID).show();
-            $("#cp_input_"+ID).show();
-            }).change(function()
-            {
-            var ID=$(this).attr('id');
-            var nom=$("#nom_input_"+ID).val();
-            var mail=$("#mail_input_"+ID).val();
-            var tel=$("#tel_input_"+ID).val();
-            var cp=$("#cp_input_"+ID).val();
-            var dataString = 'id='+ ID +'&nom='+nom+'&mail='+mail+'&tel='+tel+'&cp=' +cp;
-            $("#nom_"+ID).html('<img src="load.gif" />'); // Loading image
+                $(".edit_tr").click(function()
+                {
+                    var ID=$(this).attr('id');
+                    $("#nom_"+ID).hide();
+                    $("#mail_"+ID).hide();
+                    $("#tel_"+ID).hide();
+                    $("#cp_"+ID).hide();
+                    $("#nom_input_"+ID).show();
+                    $("#mail_input_"+ID).show();
+                    $("#tel_input_"+ID).show();
+                    $("#cp_input_"+ID).show();
+                }).change(function()
+                {
+                    var ID=$(this).attr('id');
+                    var nom=$("#nom_input_"+ID).val();
+                    var mail=$("#mail_input_"+ID).val();
+                    var tel=$("#tel_input_"+ID).val();
+                    var cp=$("#cp_input_"+ID).val();
+                    var dataString = 'id='+ ID +'&nom='+nom+'&mail='+mail+'&tel='+tel+'&cp=' +cp;
+                    $("#nom_"+ID).html('<img src="load.gif" />'); // Loading image
 
-            if(nom.length>0 && mail.length>0 && tel.length>0 && cp.length>0)
-            {
+                    if(nom.length>0 && mail.length>0 && tel.length>0 && cp.length>0)
+                    {
 
-            $.ajax({
-            type: "POST", //on fait une requête http de type POST
-            url: "./config/client.tabledit.php", //on passe des données vers le fichier table edit ajax
-            data: dataString, // la chaine de donnée qu'on passe
-            cache: false, //j'en sais rien 
-            success: function(html)
-            {
-            $("#nom_"+ID).html(nom); //on remplace par la valeur de nom etc par les nouvelles données
-            $("#mail_"+ID).html(mail);
-            $("#tel_"+ID).html(tel);
-            $("#cp_"+ID).html(cp);
-            }
+                        $.ajax({
+                            type: "POST", //on fait une requête http de type POST
+                            url: "./config/client/client.tabledit.php", //on passe des données vers le fichier table edit ajax
+                            data: dataString, // la chaine de donnée qu'on passe
+                            cache: false, //j'en sais rien 
+                            success: function(html)
+                            {
+                                $("#nom_"+ID).html(nom); //on remplace par la valeur de nom etc par les nouvelles données
+                                $("#mail_"+ID).html(mail);
+                                $("#tel_"+ID).html(tel);
+                                $("#cp_"+ID).html(cp);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        alert('Enter something.');
+                    }
+
+                });
+
+                // Edit input box click action || Si on clique sur le tableau pendant qu'on modifie ça fait rien
+                $(".editbox").mouseup(function() 
+                {
+                return false
+                });
+
+                // Outside click action|| Si on clique dehors on affiche le texte et on cache le form
+                $(document).mouseup(function()
+                {
+                $(".editbox").hide();
+                $(".text").show();
+                });
+                $(".edit_tr").mouseover(function (){
+                    var id = $(this).attr('id'); //On récup l'id sur lequel on supprime une ligne
+                    $("#dlt_"+id).click(function(){
+                        //on accède au bouton et on ecoute l'événement click sur le bouton
+                        if(confirm("Voulez-vous vraiment supprimer cette ligne ?")){
+                            //si l'utilisateur confirme
+                            $("#"+id).hide(); //Ici on cache la ligne qu'on a supprimé et par la suite on va la supprimer dans la base de donnée
+                            var dataString2 = 'id='+ id +'&table=client&attribute=idClient';
+                            //On va passer l'ID dans le fichier deleterow.php.
+                            $.ajax({
+                                type : "POST",
+                                url : "./config/client/deleterow.php",
+                                data : dataString2,
+                                cache : false
+                            });
+                        }
+                    })
+                })
+
             });
-            }
-            else
-            {
-            alert('Enter something.');
-            }
-
-            });
-
-            // Edit input box click action || Si on clique sur le tableau pendant qu'on modifie ça fait rien
-            $(".editbox").mouseup(function() 
-            {
-            return false
-            });
-
-            // Outside click action|| Si on clique dehors on affiche le texte et on cache le form
-            $(document).mouseup(function()
-            {
-            $(".editbox").hide();
-            $(".text").show();
-            });
-
-            });
-    </script>
-    <script>
-        $(document).ready(function(){
-
-            $(".edit_tr").click(function({
-
-            }))
-        })
     </script>
 </body>
 </html>
