@@ -22,6 +22,12 @@ include 'navbar.php';
 </head>
 <body>
 <?php echo $navbar; ?>
-<h1>Bienvenue... Cette page est en construction...</h1>
+<h1>Bienvenue... Cette page est en construction...
+<?php
+    // $date= idate('Y',(strtotime(date("ymd")))).idate('m',(strtotime(date("ymd")))).idate('d',(strtotime(date("ymd"))));
+    // Cette commande sert ) afficher la date d'ajd en tant que int
+?>
+
+</h1>
 </body>
 </html>
