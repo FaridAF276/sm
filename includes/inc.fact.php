@@ -23,25 +23,38 @@ include 'navbar.php';
 
 
     <h1>Bienvenue sur Sport Manager - Gestion des factures</h1>
-    <form action="inc.fact.php" method = "POST", text-align : "center">
-        <input class= "form-control-sm" type="number" name="numfact" placeholder = "Numéro de facture">
-        <input class= "form-control-sm" type="date" name="datefact" placeholder = "Date facture">
-        <input class= "form-control-sm" type="number" name="numclient" placeholder = "Numéro TVA du Client">
-        <input  type= "submit" value = "Créer une nouvelle facture" class = "btn btn-primary">
+    <form action="inc.fact.php" method = "POST">
+        <table>
+            <tr>
+                <td><input class= "form-control" type="number" name="numfact" placeholder = "Numéro de facture"></td>
+                <td><input class= "form-control" type="date" name="datefact" placeholder = "Date facture"></td>
+                <td><input class= "form-control" type="number" name="numclient" placeholder = "Numéro TVA du Client"></td>
+                <td><input  type= "submit" value = "Créer une nouvelle facture" class = "btn btn-primary"></td>
+                <td> <span class="dropdown">
+                <?php $Selectedtri=""; ?>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Trier par : <?php echo $Selectedtri?>
+                </button>
+                
+                <?php $senstri ="fact_id" ?>
+                
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#" id="Ddown_numfact">Numéro de facture </a>
+                <a class="dropdown-item" href="#" id="Ddown_dateasc">Date (ascendant) </a>
+                <a class="dropdown-item" href="#"" id="Ddown_datedesc"">Date (descendant) </a>
+                <a class="dropdown-item" href="#" id="Ddownnumclient">Numéro de Client </a>
+                </div>
+                </span>
+                </td>
+            </tr>
+        </table>
 
-        <span class="dropdown">
-          <?php $Selectedtri=""; ?>
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Trier par : <?php echo $Selectedtri?>
-          </button>
-          <?php $senstri ="fact_id" ?>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#" id="Ddown_numfact">Numéro de facture </a>
-            <a class="dropdown-item" href="#" id="Ddown_dateasc">Date (ascendant) </a>
-            <a class="dropdown-item" href="#"" id="Ddown_datedesc"">Date (descendant) </a>
-            <a class="dropdown-item" href="#" id="Ddownnumclient">Numéro de Client </a>
-            </div>
-        </span>
+        
+        
+        
+        
+
+       
         <?php
             //Si la variable $_POST['truc'] existe, alors $truc = $_POST['truc']  sinon elle vaut NULL 
             $numfact = isset($_POST["numfact"]) ? $_POST["numfact"] : NULL;
@@ -61,6 +74,7 @@ include 'navbar.php';
     <table class="table table-striped table-hover">
         <thead>
             <tr>
+            
             <th scope="col">Numéro de facture</th>
             <th scope="col">Date de la facture</th>
             <th scope="col">Numéro de TVA Client</th>

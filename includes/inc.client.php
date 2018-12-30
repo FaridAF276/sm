@@ -26,21 +26,25 @@ include 'navbar.php';
     <h1>Bienvenue sur Sport Manager - Gestion de Client <!--<?php echo date("ymd") ?>--> </h1>
 
     <!-- On met en place un form qui nous permet d'ajouter un client -->
-    <form action="inc.client.php" method = "POST", text-align : "center">
-        <input class= "form-control-sm" type="text" name="nomclient" placeholder = "Nom du client">
-        <input class= "form-control-sm" type="text" name="mailclient" placeholder = "Adresse mail du client">
-        <input class= "form-control-sm" type="number" name="numclient" placeholder = "Numéro TVA du Client">
-        <input class= "form-control-sm" type="number" name="cp" placeholder = "Code Postale">
-        <input  type= "submit" value = "Ajouter un nouveau client" class = "btn btn-primary">
+    <form action="inc.client.php" method = "POST">
+        <table>
+            <tr>
+                <td><input class= "form-control" type="text" name="nomclient" placeholder = "Nom du client"></td>
+                <td><input class= "form-control" type="text" name="mailclient" placeholder = "Adresse mail du client"></td>
+                <td><input class= "form-control" type="number" name="numclient" placeholder = "Numéro TVA du Client"></td>
+                <td><input class= "form-control" type="number" name="cp" placeholder = "Code Postale"></td>
+                <td><input  type= "submit" value = "Ajouter un nouveau client" class = "btn btn-primary"></td>
+            </tr>
+        </table>
     <?php if (isset($_POST["nomclient"]) && isset($_POST["mailclient"]) && isset($_POST["numclient"]) && isset($_POST["cp"])){
-        $nomclient = $_POST["nomclient"];
-        $mailclient = $_POST["mailclient"];
-        $numclient = $_POST["numclient"];
-        $CP = $_POST["cp"];
-        $valclient = array ($nomclient, $mailclient, $numclient, $CP);
-        $sql ="INSERT INTO client (nom_Client, mail_client, numtel_client, CP) VALUES (?,?,?,?)";
-        insert ($sql, $valclient, $base);
-    }
+            $nomclient = $_POST["nomclient"];
+            $mailclient = $_POST["mailclient"];
+            $numclient = $_POST["numclient"];
+            $CP = $_POST["cp"];
+            $valclient = array ($nomclient, $mailclient, $numclient, $CP);
+            $sql ="INSERT INTO client (nom_Client, mail_client, numtel_client, CP) VALUES (?,?,?,?)";
+            insert ($sql, $valclient, $base);
+        }
     ?>
     </form>
     <!-- On met en place la table ainsi que les input on en cachera un et on montrera l'autre 
