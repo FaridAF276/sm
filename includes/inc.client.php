@@ -27,7 +27,7 @@ include 'navbar.php';
 
     <!-- On met en place un form qui nous permet d'ajouter un client -->
     <form action="inc.client.php" method = "POST">
-        <table>
+        <table class ="table">
             <tr>
                 <td><input class= "form-control" type="text" name="nomclient" placeholder = "Nom du client"></td>
                 <td><input class= "form-control" type="text" name="mailclient" placeholder = "Adresse mail du client"></td>

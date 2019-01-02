@@ -49,12 +49,14 @@ echo $navbar;
                 while($row=mysqli_fetch_assoc($sql))
                 {
                 $nom = $row['nom_Client'];
+                $id = $row['idClient'];
             ?>
                 
                 <script type ="text/javascript">
                     var menuDeroulant = document.getElementById("select_client");
                     var element = document.createElement("option"); //On crée un élément de la liste
                     element.innerHTML = "<?php echo $nom;?>";
+                    element.id= "<?php echo $id?>";
                     menuDeroulant.appendChild(element);
                 </script>
                 <?php } ?>
@@ -65,7 +67,7 @@ echo $navbar;
         <br>
         <table id="tbClientEntry", class ="table">
             Préstation à effectuer : 
-            <tr id = "seanceChamp1">  
+            <tr id = "seanceChamp">  
                 <td>
                     <select name="Client" id="select_clientseance", class="form-control">
                         <!-- On va chercher les client dans la base de donnée -->
@@ -97,37 +99,22 @@ echo $navbar;
                 
         </table>
         
-        
+        <!-- <button onclick="valid()" id="valbtn", class = "btn btn-info">Valider</button> -->
+        <input type="button" value="Valider", id="valbtn", class = "btn btn-info">
     </form>
 </div>
 
-<!-- Script pour l'ajout automatique de ligne pour commande -->
-<script type="text/javascript" >
-    document.getElementById("addBtn").addEventListener("click", addrow);
-    // document.getElementsByClassName("del_Btn").addEventListener("click", delrow);
-    var i=0;
-    function addrow()
-    {
-        var tb = document.getElementById("tbClientEntry");
-        var tr = document.getElementById("seanceChamp1");
-        var newtr= tb.insertRow();
-        var idx = newtr.rowIndex;
-        newtr.innerHTML= tr.innerHTML;
-        i++;
-        // newtr.id="select_"+idx;
-        // console.log(newtr.id);
-        newtr.children[newtr.children.length -1].children.item(0).id="del_button_"+i;
-        // console.log(newtr.children[3].children.item(0).id)
-        // console.log(newtr.children[2].children.item(0).id);
-    }
-    function delrow(trg){
-        document.getElementById("tbClientEntry").deleteRow(trg.parentElement.parentElement.rowIndex);
-    }
-    
-</script>
-<!-- Bootstrap core JavaScript -->
-<script src="includes/vendor/jquery/jquery.min.js"></script>
-<script src="includes/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<footer>
+<script type ="text/javascript" src="includes/vendor/jquery/jquery.min.js"> </script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script> 
+    <!-- Script pour l'ajout automatique de ligne pour commande et gestion d'information-->
+    <script src="frontpageform.js"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="includes/vendor/jquery/jquery.min.js"></script>
+    <script src="includes/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</footer>
+
 
 </body>
 
