@@ -6,6 +6,10 @@ function gettable ($table, $pdo)
   $resultat = $pdo->query($sql);
   return $resultat;
 }
+function customgettable($sql, $pdo){
+  $resultat = $pdo->query($sql);
+  return $resultat;
+}
 function insert ($sql, $arrayparam, $pdo)
 {
   $sth=$pdo->prepare ($sql);
@@ -18,4 +22,13 @@ function supp ($table, $id, $idval, $pdo)
   $resultat = $pdo->query($sql);
   return $resultat;
 }
+function checkexist ($pdo, $comparwith)
+{
+  $sql = "SELECT * FROM client WHERE nom_Client='$comparwith'";
+  $resultat = $pdo->query($sql);
+  $count = $resultat->rowCount();
+  if($count > 0) return true;
+  else return false;
+}
+
 

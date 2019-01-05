@@ -33,17 +33,63 @@ include 'navbar.php';
                 <td><input class= "form-control" type="text" name="mailclient" placeholder = "Adresse mail du client"></td>
                 <td><input class= "form-control" type="number" name="numclient" placeholder = "Numéro TVA du Client"></td>
                 <td><input class= "form-control" type="number" name="cp" placeholder = "Code Postale"></td>
+                <td><input class= "form-control" type="text" placeholder ="Rue" name = "rue"></td>
+                <td><input class= "form-control" type="number" placeholder = "Numéro" name = "numero"></td>
+                <td><input class= "form-control" type="text" placeholder = "Ville" name ="ville"></td>
                 <td><input  type= "submit" value = "Ajouter un nouveau client" class = "btn btn-primary"></td>
+                    
+                    
+                
             </tr>
         </table>
-    <?php if (isset($_POST["nomclient"]) && isset($_POST["mailclient"]) && isset($_POST["numclient"]) && isset($_POST["cp"])){
+        <!-- Insertion dans les tables -->
+    <?php
+    if (isset($_POST["nomclient"]) && isset($_POST["mailclient"]) && isset($_POST["numclient"]) && isset($_POST["cp"])&&isset($_POST["rue"]) && isset($_POST["numero"]) && isset($_POST["ville"]) && isset($_POST["cp"])){
             $nomclient = $_POST["nomclient"];
             $mailclient = $_POST["mailclient"];
             $numclient = $_POST["numclient"];
             $CP = $_POST["cp"];
             $valclient = array ($nomclient, $mailclient, $numclient, $CP);
-            $sql ="INSERT INTO client (nom_Client, mail_client, numtel_client, CP) VALUES (?,?,?,?)";
-            insert ($sql, $valclient, $base);
+            // $sql ="INSERT INTO client (nom_Client, mail_client, numtel_client, CP) VALUES (?,?,?,?)";
+            // insert ($sql, $valclient, $base);
+            $rue = $_POST["rue"];
+            $numero = $_POST["numero"];
+            $ville = $_POST["ville"];
+            // lieu : cp Ville  client
+            // $lieu = array($CP,$ville,'LAST_INSERT_ID()');
+            //situation : rue numero cp
+            $situation = array ($rue,$numero, $CP);
+            //adresse : rue numero
+            $adresse = array ($rue, $numero);
+            
+            if(!checkexist($base,$nomclient)){
+                //Si notre client n'existe pas on peut alors ajouter
+
+                $sql ="INSERT INTO client (nom_Client, mail_client, numtel_client, CP) VALUES (?,?,?,?)";
+                // insert ($sql, $valclient, $base);
+                $sth=$base->prepare ($sql);
+                $sth->execute ($valclient);
+                $res=$base->query("SELECT * from client WHERE idClient = LAST_INSERT_ID()");
+                foreach ($res as $tab ) {
+                    $id=$tab["idClient"];
+                }
+                echo $id;
+                $lieu = array($CP,$ville,$id);
+                $sql = "INSERT INTO lieu (CP, ville, idClient) VALUES (?,?,?)";
+                insert($sql, $lieu, $base);
+                $sql = "INSERT INTO adresse (rue, numero) VALUES (?,?)";
+                insert($sql, $adresse, $base);
+                $sql = "INSERT INTO situation (rue, numero, CP) VALUES (?,?,?)";
+                insert($sql, $situation, $base);
+                
+
+            }
+            else {?>
+                <script type = "text/javascript">
+                    alert ("Ce client existe déjà choissez un autre client");
+                </script>
+                <?php
+                }
         }
     ?>
     </form>

@@ -1,4 +1,22 @@
 <?php
+include_once("D:\Programmes\wamp64\www\sm\includes\dbtool.php");
+/*
+On a besoin des infos clients : toutes
+info facture : toute
+liste des commandes : toute
+
+
+*/
+//requête pour prendre l'adresse
+$sql= "SELECT * FROM ((client INNER JOIN lieu on client.idClient = lieu.idClient) INNER JOIN situation on lieu.CP = situation.CP)INNER JOIN adresse ON situation.rue = adresse.rue; ";
+// customgettable();
+
+
+//On va prendre toutes les infos du client
+
+
+
+
 require ("fpdf181/fpdf.php");
 $pdf = new FPDF('P','mm','A4');
 //add new page
@@ -62,7 +80,7 @@ $pdf->Cell(34 ,5,'Amount',1,1);//end of line
 $pdf->SetFont('Arial','',12);
 
 //Numbers are right-aligned so we give 'R' after new line parameter
-
+//Toute la partie commande
 $pdf->Cell(130 ,5,'UltraCool Fridge',1,0);
 $pdf->Cell(25 ,5,'-',1,0);
 $pdf->Cell(34 ,5,'3,250',1,1,'R');//end of line
