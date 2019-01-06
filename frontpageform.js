@@ -50,20 +50,22 @@ document.getElementById("valbtn").addEventListener("click", valid);
         var tb = document.getElementById("tbClientEntry");;
         // var clientetfacture = 'cmd='+false+'&client='+client+'&facture='+numfact;
         //On va faire une requête HTML pour récupérer les ID.
-        var dataenvoi = 'client='+client+'&numfact='+numfact+'&option= 1';
+        var dataenvoi = 'id='+id+'&client='+client+'&numfact='+numfact+'&option= 1';
+        //On insert la facture dans la table facture.
         $.ajax({
                     type : "POST",
                     url : "./includes/config/insertdataform.php",
                     data : dataenvoi,
                     cache : false
                 });
-        alert(tb.rows.length);
-        for (let index = 0; index < tb.rows.length; index++) {
+        for (index = 0; index < tb.rows.length; index++) {
+            //A chaque ligne on va effectuer une mise à jour de base de donnée commande.
             var comd=[];
             // const element = array[index];
             var trow=tb.rows.item(index);//retourn une ligne du tableau
             var td= trow.children; //retourne un tableau de <td>
-            for (let tdindex = 0; tdindex < td.length-1; tdindex++) {
+            for (tdindex = 0; tdindex < td.length-1; tdindex++) {
+                //On va récupérer les infos de chaque colonne.
                 if (td[tdindex].children[0].value!==null) {
                     comd.push(td[tdindex].children[0].value);
                 }

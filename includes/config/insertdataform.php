@@ -5,9 +5,9 @@ include_once("D:\Programmes\wamp64\www\sm\includes\dbtool.php");
 
 
 $option = $_POST['option'];
-if($option==1)
-{       $numfact =$_POST['numfact'];
-        $idClient = $_POST['id'];
+if($option==1){   
+        $idClient = $_POST['id'];   
+        $numfact =$_POST['numfact'];
         $datefact = date("Y-m-d");
         $valeurfact =  array ($numfact, $datefact, $idClient);
             

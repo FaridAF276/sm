@@ -26,10 +26,6 @@ include 'navbar.php';
     <form action="inc.fact.php" method = "POST">
         <table>
             <tr>
-                <td><input class= "form-control" type="number" name="numfact" placeholder = "Numéro de facture"></td>
-                <td><input class= "form-control" type="date" name="datefact" placeholder = "Date facture"></td>
-                <td><input class= "form-control" type="number" name="numclient" placeholder = "Numéro TVA du Client"></td>
-                <td><input  type= "submit" value = "Créer une nouvelle facture" class = "btn btn-primary"></td>
                 <td> <span class="dropdown">
                 <?php $Selectedtri=""; ?>
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -41,7 +37,7 @@ include 'navbar.php';
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#" id="Ddown_numfact">Numéro de facture </a>
                 <a class="dropdown-item" href="#" id="Ddown_dateasc">Date (ascendant) </a>
-                <a class="dropdown-item" href="#"" id="Ddown_datedesc"">Date (descendant) </a>
+                <a class="dropdown-item" href="#"" id="Ddown_datedesc">Date (descendant) </a>
                 <a class="dropdown-item" href="#" id="Ddownnumclient">Numéro de Client </a>
                 </div>
                 </span>
@@ -49,22 +45,7 @@ include 'navbar.php';
             </tr>
         </table>
 
-        
-        
-        
-        
 
-       
-        <?php
-            //Si la variable $_POST['truc'] existe, alors $truc = $_POST['truc']  sinon elle vaut NULL 
-            $numfact = isset($_POST["numfact"]) ? $_POST["numfact"] : NULL;
-            $datefact = isset($_POST["datefact"]) ? $_POST["datefact"] : NULL;
-            $numclient = isset($_POST["numclient"]) ? $_POST["numclient"] : NULL;
-            $valeurfact =  array ($numfact, $datefact, $numclient);
-            
-            $sql ="INSERT INTO facture (num_fact, date_fact, idclient) VALUES (?,?,?)";
-            insert ($sql, $valeurfact, $base);
-        ?>
     </form>
     
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -77,9 +58,7 @@ include 'navbar.php';
             
             <th scope="col">Numéro de facture</th>
             <th scope="col">Date de la facture</th>
-            <th scope="col">Numéro de TVA Client</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            <th scope="col">Identifiant du client</th>
 
             </tr>
         </thead>
@@ -92,8 +71,6 @@ include 'navbar.php';
                 <th scope="row"><?php echo $tab["num_fact"] ?></th>
                 <td><?php echo $tab["date_fact"] ?></td>
                 <td><?php echo $tab["idclient"]?></td>
-                <td><button type ="button"> Modifier </button></td>
-                <td> <button type = "button" onclick='delphp'> Supprimer</button></td>
               </tr> 
                <?php } ?>
 
