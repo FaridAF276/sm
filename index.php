@@ -40,7 +40,7 @@ echo $navbar;
     <form>
         Client :
         <!-- Liste des clients -->
-        <select name="Client" id="select_client" class ="form-control">
+        <select name="" id="select_client" class ="form-control">
             <!-- On va chercher les client dans la base de donnée -->
             <option selected = ""> Selectionnez un client</option>
             <?php
@@ -56,7 +56,7 @@ echo $navbar;
                     var menuDeroulant = document.getElementById("select_client");
                     var element = document.createElement("option"); //On crée un élément de la liste
                     element.innerHTML = "<?php echo $nom;?>";
-                    element.id= "<?php echo $id?>";
+                    menuDeroulant.name= "<?php echo $id?>";
                     menuDeroulant.appendChild(element);
                 </script>
                 <?php } ?>

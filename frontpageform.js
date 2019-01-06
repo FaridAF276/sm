@@ -38,15 +38,17 @@ document.getElementById("valbtn").addEventListener("click", valid);
         return numfact;
     }
 
-    function valid() {
+    function valid() { 
         //Dès qu'on valide on crée directement un numbéro de facture.
         //Le client veut un numéro de facture qui contient la date d'ajd + deux chiffre
         //Date d'ajd
         var numfact = gettodaydate();
         var client = document.getElementById("select_client").value;
+        var id = document.getElementById("select_client").getAttribute('name');
+        alert("Clicked");
         // var idclient = document.getElementById("select_client")
         var tb = document.getElementById("tbClientEntry");;
-        var clientetfacture = 'cmd='+false+'&client='+client+'&facture='+numfact;
+        // var clientetfacture = 'cmd='+false+'&client='+client+'&facture='+numfact;
         //On va faire une requête HTML pour récupérer les ID.
         var dataenvoi = 'client='+client+'&numfact='+numfact+'&option= 1';
         $.ajax({
@@ -66,7 +68,6 @@ document.getElementById("valbtn").addEventListener("click", valid);
                 }
                 //Envoyez dans un autre fichier
             }
-            // console.log(comd[3]);
             var dataString = 'seance='+comd[0]+'&hdeb='+comd[1]+'&hfin='+comd[2]+'&datecmd='+comd[3] +'&client='+client+'&numfact='+numfact+'&option=2';
                 $.ajax({
                     type : "POST",
@@ -75,4 +76,5 @@ document.getElementById("valbtn").addEventListener("click", valid);
                     cache : false
                 });
         }
+        windows.location="www.google.com";
     }

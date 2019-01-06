@@ -1,4 +1,8 @@
-<?php include 'navbar.php';?>
+<?php include 'navbar.php';
+    include_once "dbtool.php";
+    include_once "dbh.php";
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +19,37 @@
 </head>
 <body>
     <?php echo $navbar;?>
-    <h1 class = "text-center">Bienvenue... Cette page est en construction...</h1>
+    <!-- <h1 class = "text-center">Bienvenue... Cette page est en construction...</h1> -->
+    <?php
+    $todaydate = date("Y-m-d");
+    // echo $todaydate;
+    $sql = "SELECT * FROM commande WHERE dateCmd > '$todaydate'";
+    ?>
+
+    <table class = "table table-hover">
+        <thead>
+            <tr>
+                <th>Date du rendez-vous</th>
+                <th>Heure de début</th>
+                <th>Heure de fin</th>
+                <th>Séance concerncée</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            $prest = customgettable ($sql, $base);
+            foreach ($prest as $tab)
+            {?>
+            <tr class = "table-info">
+                <td><?php echo $tab['dateCmd'] ?></td>
+                <td><?php echo $tab['hdeb'] ?></td>
+                <td><?php echo $tab['hfin'] ?></td>
+                <td><?php echo $tab['idSeance'] ?></td>
+            </tr>  
+            <?php } ?>
+            
+        </tbody>
+        
+    </table>
 </body>
 </html>
-
-SELECT 

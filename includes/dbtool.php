@@ -30,5 +30,24 @@ function checkexist ($pdo, $comparwith)
   if($count > 0) return true;
   else return false;
 }
+function get_time_difference($time1, $time2)
+{
+	$time1 = strtotime("1/1/1980 $time1");
+	$time2 = strtotime("1/1/1980 $time2");
+
+  if ($time2 < $time1)
+  {
+    return 0;
+  }
+  else if($time2==$time1)
+  {
+    return 0;
+  }
+  else {
+    return ($time2 - $time1) / 3600;
+  }
+
+
+}
 
 

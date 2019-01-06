@@ -31,7 +31,8 @@ include 'navbar.php';
             <tr>
                 <td><input class= "form-control" type="text" name="nomclient" placeholder = "Nom du client"></td>
                 <td><input class= "form-control" type="text" name="mailclient" placeholder = "Adresse mail du client"></td>
-                <td><input class= "form-control" type="number" name="numclient" placeholder = "Numéro TVA du Client"></td>
+                <td><input class= "form-control" type="number" name="numclient" placeholder = "Numéro téléphone du client"></td>
+                <td><input class= "form-control" type="number" name="numtvaclient" placeholder = "Numéro TVA du Client"></td>
                 <td><input class= "form-control" type="number" name="cp" placeholder = "Code Postale"></td>
                 <td><input class= "form-control" type="text" placeholder ="Rue" name = "rue"></td>
                 <td><input class= "form-control" type="number" placeholder = "Numéro" name = "numero"></td>
@@ -48,8 +49,9 @@ include 'navbar.php';
             $nomclient = $_POST["nomclient"];
             $mailclient = $_POST["mailclient"];
             $numclient = $_POST["numclient"];
+            $numtvaclient = $_POST["numtvaclient"];
             $CP = $_POST["cp"];
-            $valclient = array ($nomclient, $mailclient, $numclient, $CP);
+            $valclient = array ($nomclient, $mailclient, $numclient, $CP, $numtvaclient);
             // $sql ="INSERT INTO client (nom_Client, mail_client, numtel_client, CP) VALUES (?,?,?,?)";
             // insert ($sql, $valclient, $base);
             $rue = $_POST["rue"];
@@ -65,7 +67,7 @@ include 'navbar.php';
             if(!checkexist($base,$nomclient)){
                 //Si notre client n'existe pas on peut alors ajouter
 
-                $sql ="INSERT INTO client (nom_Client, mail_client, numtel_client, CP) VALUES (?,?,?,?)";
+                $sql ="INSERT INTO client (nom_Client, mail_client, numtel_client, CP, numtvaclient) VALUES (?,?,?,?,?)";
                 // insert ($sql, $valclient, $base);
                 $sth=$base->prepare ($sql);
                 $sth->execute ($valclient);
