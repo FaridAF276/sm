@@ -57,18 +57,19 @@ document.getElementById("valbtn").addEventListener("click", valid);
                     data : dataenvoi,
                     cache : false
                 });
+        alert(tb.rows.length);
         for (let index = 0; index < tb.rows.length; index++) {
             var comd=[];
             // const element = array[index];
             var trow=tb.rows.item(index);//retourn une ligne du tableau
             var td= trow.children; //retourne un tableau de <td>
             for (let tdindex = 0; tdindex < td.length-1; tdindex++) {
-                if (td[tdindex].children[0].value!=null) {
+                if (td[tdindex].children[0].value!==null) {
                     comd.push(td[tdindex].children[0].value);
                 }
                 //Envoyez dans un autre fichier
             }
-            var dataString = 'seance='+comd[0]+'&hdeb='+comd[1]+'&hfin='+comd[2]+'&datecmd='+comd[3] +'&client='+client+'&numfact='+numfact+'&option=2';
+            var dataString = 'seance='+comd[0]+'&hdeb='+comd[1]+'&hfin='+comd[2]+'&datecmd='+comd[3] +'&client='+client+'&numfact='+numfact+'&option=2&id='+id;
                 $.ajax({
                     type : "POST",
                     url : "./includes/config/insertdataform.php",
@@ -76,5 +77,6 @@ document.getElementById("valbtn").addEventListener("click", valid);
                     cache : false
                 });
         }
+
         window.open('./includes/generateinvoice.php?id='+id+'&numfact='+numfact);
     }

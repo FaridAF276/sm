@@ -62,29 +62,127 @@ include 'navbar.php';
     <table class="table table-bordered">
         <caption></caption>
         <thead>
-        <th>ID Seance</th>
         <th>Intutilé de la séance</th>
         <th>Description de la séance</th>
         <th>Prix horarire</th>
         <th></th>
-        <th></th>
         </thead>
-        
         <tbody> 
-                <?php $seance = gettable ('seance', $base);?> 
-               <?php foreach ($seance as $tab) {?>
-               <tr>
-                <td> <?php echo $tab["idSeance"] ?> </td>
-                <td> <?php echo $tab["typeSeance"] ?> </td>
-                <td> <?php echo $tab["DescSeance"]?> </td>
-                <td> <?php echo $tab["prixHoraire"]?> </td>
-                <td><a href="#">Modifier</a></td>
-                <td><a href="#">Supprimer</a></td>
-              </tr> 
+       <?php $seance = gettable ('seance', $base);?> 
+               <?php foreach ($seance as $tab) {
+                $id=$tab["idSeance"] ;
+                $type=$tab["typeSeance"] ;
+                $desc = $tab["DescSeance"];
+                $prix=$tab["prixHoraire"];?>
+            <tr id="<?php echo $id; ?>" class="edit_tr">
+                <td class="edit_td">
+                    <span id="type_<?php echo $id;?>" class="text"> <?php echo $type;?> </span>
+                    <input type="text" value="<?php echo $type;?>" class="editbox form-control" id="type_input_<?php echo $id; ?>" />
+                </td>
+
+
+                <td class="edit_td">
+                    <span id="desc_<?php echo $id; ?>" class="text"><?php echo $desc; ?></span>
+                    <input type="text" value="<?php echo $desc; ?>" class="editbox form-control" id="desc_input_<?php echo $id; ?>"/>
+                </td>
+
+                <td class="edit_td">
+                    <span id="prix_<?php echo $id; ?>" class="text"><?php echo $prix; ?></span> 
+                    <input type="text" value="<?php echo $prix; ?>" class="editbox form-control" id="prix_input_<?php echo $id; ?>"/>
+                </td>  
+
+                <td>
+                    <button id = "dlt_<?php echo $id;?>" type = "Button" class="btn btn-danger">Supprimer</button>
+                </td>
+            </tr> 
                <?php } ?>
         </tbody>
                
 
     </table>
+
+
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script> 
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function()
+            {
+                $(".editbox").hide(); //Dès qu'on ouvre on cache les editbox
+                $(".edit_tr").click(function()
+                {
+                    var ID=$(this).attr('id');
+                    $("#type_"+ID).hide();
+                    $("#desc_"+ID).hide();
+                    $("#prix_"+ID).hide();
+                    $("#type_input_"+ID).show();
+                    $("#desc_input_"+ID).show();
+                    $("#prix_input_"+ID).show();
+                }).change(function()
+                {
+                    var ID=$(this).attr('id');
+                    var type=$("#type_input_"+ID).val();
+                    var desc=$("#desc_input_"+ID).val();
+                    var prix=$("#prix_input_"+ID).val();
+                    var dataString = 'id='+ ID +'&type='+type+'&desc='+desc+'&prix='+prix;
+                    $("#type_"+ID).html('<img src="load.gif" />'); // Loading image
+                    
+                    if(type.length>0 && desc.length>0 && prix.length>0)
+                    {
+
+                        $.ajax({
+                            type: "POST", //on fait une requête http de type POST
+                            url: "./config/seance/client.tabledit.php", //on passe des données vers le fichier table edit ajax
+                            data: dataString, // la chaine de donnée qu'on passe
+                            cache: false, //j'en sais rien 
+                            success: function(html)
+                            {
+                                $("#type_"+ID).html(type); //on remplace par la valeur de nom etc par les nouvelles données
+                                $("desc_"+ID).html(desc);
+                                $("#prix_"+ID).html(prix);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        alert('Enter something.');
+                    }
+
+                });
+
+                // Edit input box click action || Si on clique sur le tableau pendant qu'on modifie ça fait rien
+                $(".editbox").mouseup(function() 
+                {
+                return false
+                });
+
+                // Outside click action|| Si on clique dehors on affiche le texte et on cache le form
+                $(document).mouseup(function()
+                {
+                $(".editbox").hide();
+                $(".text").show();
+                });
+                $(".edit_tr").mouseover(function (){
+                    var id = $(this).attr('id'); //On récup l'id sur lequel on supprime une ligne
+                    $("#dlt_"+id).click(function(){
+                        //on accède au bouton et on ecoute l'événement click sur le bouton
+                        if(confirm("Voulez-vous vraiment supprimer cette ligne ?")){
+                            //si l'utilisateur confirme
+                            $("#"+id).hide(); //Ici on cache la ligne qu'on a supprimé et par la suite on va la supprimer dans la base de donnée
+                            var dataString2 = 'id='+ id +'&table=seance&attribute=idSeance';
+                            //On va passer l'ID dans le fichier deleterow.php.
+                            $.ajax({
+                                type : "POST",
+                                url : "./config/seance/deleterow.php",
+                                data : dataString2,
+                                cache : false
+                            });
+                        }
+                    })
+                })
+
+            });
+    </script>
+
 </body>
 </html>
