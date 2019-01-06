@@ -45,7 +45,7 @@ document.getElementById("valbtn").addEventListener("click", valid);
         var numfact = gettodaydate();
         var client = document.getElementById("select_client").value;
         var id = document.getElementById("select_client").getAttribute('name');
-        alert("Clicked");
+        // alert("Clicked");
         // var idclient = document.getElementById("select_client")
         var tb = document.getElementById("tbClientEntry");;
         // var clientetfacture = 'cmd='+false+'&client='+client+'&facture='+numfact;
@@ -76,5 +76,5 @@ document.getElementById("valbtn").addEventListener("click", valid);
                     cache : false
                 });
         }
-        windows.location="www.google.com";
+        window.open('./includes/generateinvoice.php?id='+id+'&numfact='+numfact);
     }

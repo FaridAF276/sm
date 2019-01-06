@@ -14,7 +14,7 @@ liste des commandes : toute
 $id = $_GET['id'];
 // $numfact = 2019010519;
 $numfact =$_GET['numfact'];
-$sql= "SELECT * FROM (((client INNER JOIN lieu on client.idClient = lieu.idClient) INNER JOIN situation on lieu.CP = situation.CP)INNER JOIN adresse ON situation.rue = adresse.rue) WHERE client.idClient = 38 ";
+$sql= "SELECT * FROM (((client INNER JOIN lieu on client.idClient = lieu.idClient) INNER JOIN situation on lieu.CP = situation.CP)INNER JOIN adresse ON situation.rue = adresse.rue) WHERE client.idClient = '$id' ";
 
 //On va prendre toutes les infos du client
 
